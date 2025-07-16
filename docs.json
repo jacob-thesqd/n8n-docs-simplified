@@ -1,0 +1,89 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "n8n Documentation",
+  "theme": "prism",
+  "colors": {
+    "primary": "#FF6D5A",
+    "light": "#FF8A75",
+    "dark": "#E55A47"
+  },
+  "logo": {
+    "dark": "/logo/n8n-logo-dark.svg",
+    "light": "/logo/n8n-logo-light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "index",
+        "installation",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "Core Concepts",
+      "pages": [
+        "concepts/workflows",
+        "concepts/nodes",
+        "concepts/expressions",
+        "concepts/credentials"
+      ]
+    },
+    {
+      "group": "Nodes",
+      "pages": [
+        "nodes/overview",
+        "nodes/core-nodes",
+        "nodes/trigger-nodes",
+        "nodes/regular-nodes",
+        "nodes/custom-nodes"
+      ]
+    },
+    {
+      "group": "Building Workflows",
+      "pages": [
+        "workflows/creating",
+        "workflows/testing",
+        "workflows/debugging",
+        "workflows/examples"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api/introduction",
+        "api/authentication",
+        "api/workflows",
+        "api/executions"
+      ]
+    },
+    {
+      "group": "Self-Hosting",
+      "pages": [
+        "hosting/overview",
+        "hosting/docker",
+        "hosting/npm",
+        "hosting/configuration"
+      ]
+    },
+    {
+      "group": "Help & Support",
+      "pages": [
+        "troubleshooting",
+        "faq",
+        "community"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/n8n-io/n8n",
+    "discord": "https://discord.gg/n8n",
+    "twitter": "https://twitter.com/n8n_io"
+  },
+  "analytics": {
+    "gtag": {
+      "tagId": "G-XXXXXXXXXX"
+    }
+  }
+}
