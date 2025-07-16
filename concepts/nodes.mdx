@@ -1,0 +1,185 @@
+---
+title: "Nodes"
+description: "Understanding the building blocks of n8n workflows"
+---
+
+## What are Nodes?
+
+Nodes are the fundamental building blocks of n8n workflows. Each node performs a specific function, such as retrieving data, processing information, or sending notifications. By connecting nodes together, you create powerful automation workflows.
+
+## Node Types
+
+### Trigger Nodes
+Trigger nodes start workflow executions. They "listen" for events and begin the workflow when conditions are met.
+
+**Examples:**
+- **Manual Trigger** - Start workflow manually
+- **Webhook** - Respond to HTTP requests
+- **Cron** - Run on a schedule
+- **File Trigger** - Watch for file changes
+
+### Regular Nodes
+Regular nodes process data and perform actions. They receive data from previous nodes and output processed results.
+
+**Examples:**
+- **HTTP Request** - Make API calls
+- **Gmail** - Send and receive emails
+- **Slack** - Send messages and notifications
+- **Google Sheets** - Read and write spreadsheet data
+
+### Conditional Nodes
+Conditional nodes control workflow flow based on data or conditions.
+
+**Examples:**
+- **IF** - Branch based on conditions
+- **Switch** - Multiple condition branches
+- **Merge** - Combine data from multiple paths
+
+## Node Structure
+
+Every node has several key components:
+
+### Parameters
+Configuration settings that define how the node behaves.
+
+```json
+{
+  "method": "GET",
+  "url": "https://api.example.com/data",
+  "authentication": "headerAuth"
+}
+```
+
+### Input Data
+Data received from the previous node or trigger.
+
+### Output Data
+Data produced by the node that flows to the next node.
+
+### Credentials
+Authentication information for external services.
+
+## Working with Nodes
+
+### Adding Nodes
+1. Click the **+** button on the canvas
+2. Search for the desired node
+3. Click to add it to your workflow
+4. Configure the node parameters
+
+### Configuring Nodes
+1. Double-click a node to open its configuration
+2. Fill in required parameters
+3. Set up authentication if needed
+4. Test the node configuration
+
+### Connecting Nodes
+1. Click and drag from one node's output to another node's input
+2. Data flows in the direction of the arrow
+3. Multiple connections create branching workflows
+
+## Node Categories
+
+<CardGroup cols={2}>
+  <Card title="Core Nodes" icon="star">
+    Essential nodes for basic functionality
+  </Card>
+  <Card title="Communication" icon="comments">
+    Email, messaging, and notification nodes
+  </Card>
+  <Card title="Data & Storage" icon="database">
+    Database, file, and storage operations
+  </Card>
+  <Card title="Development" icon="code">
+    API, webhook, and development tools
+  </Card>
+  <Card title="Marketing" icon="bullhorn">
+    CRM, email marketing, and analytics
+  </Card>
+  <Card title="Productivity" icon="tasks">
+    Task management and productivity tools
+  </Card>
+</CardGroup>
+
+## Common Node Patterns
+
+### Data Transformation
+```
+HTTP Request → Set → Function → Next Node
+```
+
+### Error Handling
+```
+Try Node → [Success Path] → Continue
+         → [Error Path] → Error Handler
+```
+
+### Conditional Processing
+```
+IF Node → [True] → Action A
+       → [False] → Action B
+```
+
+## Best Practices
+
+### Node Configuration
+- Use descriptive node names
+- Add notes to complex configurations
+- Test nodes individually before connecting
+- Keep sensitive data in credentials
+
+### Data Processing
+- Validate input data before processing
+- Handle empty or null values
+- Transform data consistently
+- Use appropriate data types
+
+### Error Handling
+- Add error handling for critical paths
+- Log errors for debugging
+- Provide fallback actions
+- Monitor node performance
+
+## Node Development
+
+### Custom Nodes
+Create custom nodes when existing ones don't meet your needs:
+
+1. **Community Nodes** - Install from the n8n community
+2. **Custom Development** - Build your own nodes
+3. **Function Nodes** - Write custom JavaScript code
+
+### Function Node Example
+```javascript
+// Process items from previous node
+return items.map(item => {
+  return {
+    json: {
+      processedAt: new Date(),
+      originalData: item.json,
+      processed: true
+    }
+  };
+});
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Browse All Nodes" icon="grid" href="/nodes/overview">
+    Explore the complete node library
+  </Card>
+  <Card title="Expressions" icon="code" href="/concepts/expressions">
+    Learn to use expressions with nodes
+  </Card>
+  <Card title="Credentials" icon="key" href="/concepts/credentials">
+    Set up authentication for nodes
+  </Card>
+  <Card title="Examples" icon="lightbulb" href="/workflows/examples">
+    See nodes in action
+  </Card>
+</CardGroup>
+
+<Tip>
+  Start with simple nodes like HTTP Request and Manual Trigger to understand the basics before moving to more complex integrations.
+</Tip>
