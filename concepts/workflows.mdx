@@ -1,0 +1,145 @@
+---
+title: "Workflows"
+description: "Understanding n8n workflows and how they work"
+---
+
+## What are Workflows?
+
+A workflow in n8n is a collection of connected nodes that automate a specific task or process. Think of it as a flowchart where each step (node) performs a specific action, and the arrows between them show how data flows from one step to the next.
+
+## Workflow Components
+
+### Nodes
+Nodes are the building blocks of workflows. Each node has a specific function:
+
+- **Trigger Nodes** - Start the workflow when certain conditions are met
+- **Regular Nodes** - Process, transform, or send data
+- **Conditional Nodes** - Control the flow based on conditions
+
+### Connections
+Connections show how data flows between nodes. Data from one node's output becomes the input for the next node.
+
+### Executions
+An execution is a single run of a workflow. Each execution processes data through all connected nodes.
+
+## Workflow Types
+
+### Manual Workflows
+- Started manually by clicking "Execute Workflow"
+- Useful for testing and one-time tasks
+- Good for data migration or analysis
+
+### Automated Workflows
+- Started by trigger nodes automatically
+- Run based on schedules, webhooks, or external events
+- Handle ongoing processes and integrations
+
+## Workflow States
+
+<CardGroup cols={2}>
+  <Card title="Inactive" icon="pause">
+    Workflow exists but won't run automatically
+  </Card>
+  <Card title="Active" icon="play">
+    Workflow is running and responds to triggers
+  </Card>
+  <Card title="Error" icon="exclamation-triangle">
+    Workflow encountered an error and stopped
+  </Card>
+  <Card title="Success" icon="check">
+    Workflow completed successfully
+  </Card>
+</CardGroup>
+
+## Data Flow
+
+Data in n8n flows from node to node in JSON format. Each node:
+
+1. **Receives** data from the previous node
+2. **Processes** the data according to its function
+3. **Outputs** the processed data to the next node
+
+### Example Data Flow
+
+```json
+// Input data to HTTP Request node
+{
+  "url": "https://api.example.com/users"
+}
+
+// Output data from HTTP Request node
+{
+  "statusCode": 200,
+  "body": [
+    {"id": 1, "name": "John"},
+    {"id": 2, "name": "Jane"}
+  ]
+}
+
+// Processed data after transformation
+{
+  "users": ["John", "Jane"],
+  "count": 2
+}
+```
+
+## Best Practices
+
+### Planning Your Workflow
+
+1. **Define the goal** - What should the workflow accomplish?
+2. **Map the steps** - What actions need to happen?
+3. **Identify triggers** - What should start the workflow?
+4. **Plan error handling** - What if something goes wrong?
+
+### Organizing Workflows
+
+- Use descriptive names for workflows
+- Add notes to complex nodes
+- Group related workflows in folders
+- Use consistent naming conventions
+
+### Testing and Debugging
+
+- Test workflows with sample data first
+- Use the execution history to debug issues
+- Add error handling for critical paths
+- Monitor workflow performance
+
+## Common Patterns
+
+### Data Synchronization
+```
+Trigger → Get Data → Transform → Send to Destination
+```
+
+### Notification System
+```
+Trigger → Check Condition → Send Alert → Log Result
+```
+
+### Data Processing Pipeline
+```
+Trigger → Fetch Data → Validate → Transform → Store → Notify
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Learn About Nodes" icon="puzzle-piece" href="/concepts/nodes">
+    Understand the different types of nodes
+  </Card>
+  <Card title="Expressions" icon="code" href="/concepts/expressions">
+    Learn how to use expressions for data manipulation
+  </Card>
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Create your first workflow
+  </Card>
+  <Card title="Examples" icon="lightbulb" href="/workflows/examples">
+    See real-world workflow examples
+  </Card>
+</CardGroup>
+
+<Tip>
+  Start with simple workflows and gradually add complexity. It's easier to debug and maintain smaller, focused workflows.
+</Tip>
