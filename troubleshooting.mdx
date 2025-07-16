@@ -1,0 +1,263 @@
+---
+title: "Troubleshooting"
+description: "Common issues and solutions for n8n"
+---
+
+## Common Issues
+
+### Installation Problems
+
+#### Node.js Version Issues
+**Problem**: n8n fails to install or start due to Node.js version incompatibility.
+
+**Solution**:
+1. Check your Node.js version: `node --version`
+2. Ensure you have Node.js 18.10 or higher
+3. Update Node.js if needed
+4. Clear npm cache: `npm cache clean --force`
+5. Reinstall n8n: `npm install n8n -g`
+
+#### Port Already in Use
+**Problem**: Error message "Port 5678 is already in use"
+
+**Solution**:
+```bash
+# Option 1: Use a different port
+N8N_PORT=8080 n8n
+
+# Option 2: Kill process using port 5678
+lsof -ti:5678 | xargs kill -9
+```
+
+#### Permission Errors
+**Problem**: Permission denied errors during installation
+
+**Solution**:
+```bash
+# Use sudo for global installation
+sudo npm install n8n -g
+
+# Or use npx to run without global installation
+npx n8n
+```
+
+### Workflow Issues
+
+#### Workflow Not Triggering
+**Problem**: Workflow is active but not executing
+
+**Troubleshooting Steps**:
+1. Check workflow activation status
+2. Verify trigger node configuration
+3. Check execution history for errors
+4. Test trigger manually if possible
+5. Review webhook URLs and authentication
+
+#### Node Connection Errors
+**Problem**: "Unable to connect to service" errors
+
+**Solutions**:
+1. **Check credentials**: Verify authentication details
+2. **Test connectivity**: Use HTTP Request node to test API endpoints
+3. **Check firewall**: Ensure ports are open
+4. **Verify URLs**: Check for typos in service URLs
+5. **Review rate limits**: Some services have API rate limits
+
+#### Data Not Flowing Between Nodes
+**Problem**: Data stops at a specific node
+
+**Debugging Steps**:
+1. Check node execution results
+2. Verify data format matches expected input
+3. Use "Execute Previous Node" to isolate issues
+4. Check for null or undefined values
+5. Review node configuration parameters
+
+### Performance Issues
+
+#### Slow Workflow Execution
+**Problem**: Workflows take too long to complete
+
+**Optimization Tips**:
+1. **Batch operations**: Process multiple items at once
+2. **Reduce API calls**: Cache data when possible
+3. **Parallel processing**: Use multiple execution paths
+4. **Optimize queries**: Use efficient database queries
+5. **Monitor memory usage**: Large datasets can cause slowdowns
+
+#### Memory Issues
+**Problem**: n8n crashes or runs out of memory
+
+**Solutions**:
+1. **Increase memory limit**: `NODE_OPTIONS="--max-old-space-size=4096" n8n`
+2. **Process smaller batches**: Use "Split In Batches" node
+3. **Clean up data**: Remove unnecessary data between nodes
+4. **Use streaming**: For large file processing
+5. **Monitor executions**: Check execution history for memory-intensive workflows
+
+### Authentication Issues
+
+#### Credential Problems
+**Problem**: Authentication failures with external services
+
+**Solutions**:
+1. **Verify credentials**: Check username, password, API keys
+2. **Check expiration**: Ensure tokens haven't expired
+3. **Review permissions**: Verify account has required permissions
+4. **Test outside n8n**: Use curl or Postman to test API
+5. **Check service status**: Verify external service is operational
+
+#### OAuth Issues
+**Problem**: OAuth authentication fails or expires
+
+**Solutions**:
+1. **Refresh tokens**: Re-authenticate with the service
+2. **Check redirect URLs**: Ensure OAuth redirect URLs are correct
+3. **Verify app permissions**: Check OAuth app has required scopes
+4. **Clear browser cache**: Remove cached authentication data
+5. **Check service settings**: Verify OAuth app configuration
+
+### Database Issues
+
+#### Connection Errors
+**Problem**: Cannot connect to database
+
+**Solutions**:
+1. **Check connection string**: Verify host, port, database name
+2. **Test connectivity**: Use telnet or ping to test connection
+3. **Verify credentials**: Check username and password
+4. **Check firewall**: Ensure database port is accessible
+5. **Review SSL settings**: Check SSL/TLS configuration
+
+#### Query Errors
+**Problem**: Database queries fail or return unexpected results
+
+**Solutions**:
+1. **Test queries**: Run queries directly in database client
+2. **Check syntax**: Verify SQL syntax is correct
+3. **Escape special characters**: Use proper escaping for strings
+4. **Check permissions**: Verify user has required database permissions
+5. **Review data types**: Ensure data types match expectations
+
+## Debug Mode
+
+Enable debug mode for detailed logging:
+
+```bash
+# Enable debug mode
+N8N_LOG_LEVEL=debug n8n
+
+# Enable specific debug categories
+DEBUG=n8n:* n8n
+```
+
+## Log Files
+
+### Default Log Locations
+
+**Linux/Mac**:
+```
+~/.n8n/logs/
+```
+
+**Windows**:
+```
+%USERPROFILE%\.n8n\logs\
+```
+
+### Log Levels
+
+- `error` - Error messages only
+- `warn` - Warnings and errors
+- `info` - General information (default)
+- `debug` - Detailed debug information
+- `trace` - Very detailed tracing
+
+## Browser Developer Tools
+
+Use browser developer tools to debug frontend issues:
+
+1. **Open Developer Tools**: F12 or right-click → Inspect
+2. **Check Console**: Look for JavaScript errors
+3. **Network Tab**: Monitor API requests and responses
+4. **Application Tab**: Check local storage and cookies
+
+## Common Error Messages
+
+### "Maximum call stack size exceeded"
+**Cause**: Infinite loop in workflow or expression
+**Solution**: Check for circular references and infinite loops
+
+### "Workflow could not be activated"
+**Cause**: Issue with trigger node configuration
+**Solution**: Check trigger node settings and test manually
+
+### "Cannot read property of undefined"
+**Cause**: Trying to access non-existent data property
+**Solution**: Check data structure and use proper expressions
+
+### "Request failed with status code 401"
+**Cause**: Authentication failure
+**Solution**: Verify credentials and permissions
+
+### "Timeout of 120000ms exceeded"
+**Cause**: Operation taking too long
+**Solution**: Optimize workflow or increase timeout settings
+
+## Getting Help
+
+### Community Support
+
+1. **Discord**: Join the [n8n Discord server](https://discord.gg/n8n)
+2. **Forum**: Visit the [community forum](https://community.n8n.io)
+3. **GitHub**: Check [GitHub Issues](https://github.com/n8n-io/n8n/issues)
+
+### Before Asking for Help
+
+1. **Check documentation**: Search existing docs
+2. **Review error messages**: Include full error details
+3. **Test minimal example**: Create simple reproduction case
+4. **Check logs**: Include relevant log entries
+5. **Share workflow**: Export and share problematic workflow
+
+### Information to Include
+
+When reporting issues, include:
+
+- n8n version
+- Operating system
+- Node.js version
+- Error messages
+- Workflow configuration
+- Steps to reproduce
+- Expected vs actual behavior
+
+## Best Practices
+
+### Workflow Design
+
+1. **Keep it simple**: Start with basic workflows
+2. **Test incrementally**: Test each node individually
+3. **Handle errors**: Add error handling for critical paths
+4. **Use descriptive names**: Name nodes and workflows clearly
+5. **Document workflows**: Add notes and descriptions
+
+### Performance
+
+1. **Monitor executions**: Check execution history regularly
+2. **Optimize queries**: Use efficient database queries
+3. **Batch operations**: Process multiple items together
+4. **Cache data**: Store frequently used data
+5. **Clean up**: Remove old executions and unused workflows
+
+### Security
+
+1. **Secure credentials**: Use credential store properly
+2. **Validate input**: Check incoming data for security
+3. **Use HTTPS**: Always use secure connections
+4. **Monitor access**: Track who accesses your n8n instance
+5. **Regular updates**: Keep n8n updated to latest version
+
+<Warning>
+  Always test workflows in a non-production environment before deploying to production.
+</Warning>
