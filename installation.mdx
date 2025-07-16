@@ -1,0 +1,128 @@
+---
+title: "Installation"
+description: "Get n8n up and running on your system"
+---
+
+## Installation Methods
+
+There are several ways to install and run n8n. Choose the method that best fits your needs:
+
+<CardGroup cols={2}>
+  <Card title="npm" icon="npm" href="#npm-installation">
+    Install via npm for local development
+  </Card>
+  <Card title="Docker" icon="docker" href="#docker-installation">
+    Run with Docker for easy deployment
+  </Card>
+  <Card title="Desktop App" icon="desktop" href="#desktop-app">
+    Download the desktop application
+  </Card>
+  <Card title="Cloud" icon="cloud" href="#n8n-cloud">
+    Use n8n.cloud for hosted solution
+  </Card>
+</CardGroup>
+
+## npm Installation
+
+### Prerequisites
+
+- Node.js version 18.10 or above
+- npm version 8 or above
+
+### Install n8n globally
+
+```bash
+npm install n8n -g
+```
+
+### Start n8n
+
+```bash
+n8n
+```
+
+This will start n8n and open it in your default browser at `http://localhost:5678`.
+
+## Docker Installation
+
+### Quick Start
+
+```bash
+docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  n8nio/n8n
+```
+
+### With Data Persistence
+
+```bash
+docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  n8nio/n8n
+```
+
+### Using Docker Compose
+
+```yaml
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=password
+    volumes:
+      - ~/.n8n:/home/node/.n8n
+```
+
+## Desktop App
+
+Download the desktop app from the [official website](https://n8n.io/download):
+
+- **Windows**: Download the `.exe` installer
+- **macOS**: Download the `.dmg` file
+- **Linux**: Download the `.AppImage` file
+
+## n8n Cloud
+
+For a managed solution, sign up for [n8n.cloud](https://n8n.cloud):
+
+- No installation required
+- Automatic updates
+- Managed infrastructure
+- Built-in security and compliance
+
+## Environment Variables
+
+Customize your n8n installation with environment variables:
+
+```bash
+# Basic authentication
+export N8N_BASIC_AUTH_ACTIVE=true
+export N8N_BASIC_AUTH_USER=admin
+export N8N_BASIC_AUTH_PASSWORD=password
+
+# Change default port
+export N8N_PORT=8080
+
+# Set custom data directory
+export N8N_USER_FOLDER=/path/to/data
+
+# Enable webhook URL
+export WEBHOOK_URL=https://your-domain.com/
+```
+
+## Next Steps
+
+After installation, check out the [Quick Start guide](/quickstart) to create your first workflow.
+
+<Warning>
+  For production deployments, make sure to configure proper security measures including authentication, HTTPS, and network restrictions.
+</Warning>
