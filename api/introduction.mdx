@@ -1,0 +1,289 @@
+---
+title: "API Introduction"
+description: "Learn how to interact with n8n programmatically"
+---
+
+## n8n API Overview
+
+The n8n API allows you to interact with your n8n instance programmatically. You can manage workflows, executions, credentials, and more through HTTP requests.
+
+## Authentication
+
+### API Key Authentication
+
+Generate an API key in your n8n instance:
+
+1. Go to **Settings** → **API**
+2. Click **Create API Key**
+3. Copy the generated key
+4. Use it in your requests
+
+```bash
+curl -X GET \
+  https://your-n8n-instance.com/api/v1/workflows \
+  -H "X-N8N-API-KEY: your-api-key"
+```
+
+### Basic Authentication
+
+For instances with basic auth enabled:
+
+```bash
+curl -X GET \
+  https://your-n8n-instance.com/api/v1/workflows \
+  -u username:password
+```
+
+## Base URL
+
+All API requests should be made to:
+```
+https://your-n8n-instance.com/api/v1/
+```
+
+## Common Endpoints
+
+### Workflows
+
+<CardGroup cols={2}>
+  <Card title="GET /workflows" icon="list">
+    List all workflows
+  </Card>
+  <Card title="POST /workflows" icon="plus">
+    Create a new workflow
+  </Card>
+  <Card title="GET /workflows/{id}" icon="eye">
+    Get workflow details
+  </Card>
+  <Card title="PUT /workflows/{id}" icon="edit">
+    Update a workflow
+  </Card>
+</CardGroup>
+
+### Executions
+
+<CardGroup cols={2}>
+  <Card title="GET /executions" icon="list">
+    List workflow executions
+  </Card>
+  <Card title="POST /workflows/{id}/execute" icon="play">
+    Execute a workflow
+  </Card>
+  <Card title="GET /executions/{id}" icon="eye">
+    Get execution details
+  </Card>
+  <Card title="DELETE /executions/{id}" icon="trash">
+    Delete an execution
+  </Card>
+</CardGroup>
+
+## Example Requests
+
+### List Workflows
+
+```bash
+curl -X GET \
+  "https://your-n8n-instance.com/api/v1/workflows" \
+  -H "X-N8N-API-KEY: your-api-key"
+```
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "My Workflow",
+      "active": true,
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "updatedAt": "2023-01-01T00:00:00.000Z"
+    }
+  ]
+}
+```
+
+### Execute Workflow
+
+```bash
+curl -X POST \
+  "https://your-n8n-instance.com/api/v1/workflows/1/execute" \
+  -H "X-N8N-API-KEY: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data": {
+      "message": "Hello World"
+    }
+  }'
+```
+
+### Create Workflow
+
+```bash
+curl -X POST \
+  "https://your-n8n-instance.com/api/v1/workflows" \
+  -H "X-N8N-API-KEY: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "API Created Workflow",
+    "nodes": [
+      {
+        "name": "Start",
+        "type": "n8n-nodes-base.manualTrigger",
+        "position": [240, 300],
+        "parameters": {}
+      }
+    ],
+    "connections": {}
+  }'
+```
+
+## Error Handling
+
+The API returns standard HTTP status codes:
+
+- `200` - Success
+- `201` - Created
+- `400` - Bad Request
+- `401` - Unauthorized
+- `404` - Not Found
+- `500` - Internal Server Error
+
+**Error Response Format:**
+```json
+{
+  "message": "Error description",
+  "code": "ERROR_CODE"
+}
+```
+
+## Rate Limiting
+
+API requests are rate-limited to prevent abuse:
+
+- **Default**: 100 requests per minute
+- **Headers**: Rate limit info in response headers
+- **Exceeded**: Returns 429 status code
+
+## Webhooks
+
+### Webhook URLs
+
+n8n provides webhook endpoints for triggering workflows:
+
+```
+https://your-n8n-instance.com/webhook/your-webhook-id
+```
+
+### Webhook Authentication
+
+Webhooks can be configured with authentication:
+
+- **None** - No authentication required
+- **Header Auth** - Custom header authentication
+- **Query Auth** - Authentication via query parameters
+
+### Example Webhook
+
+```bash
+curl -X POST \
+  "https://your-n8n-instance.com/webhook/my-webhook" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "event": "user_registered",
+    "user": {
+      "id": 123,
+      "email": "user@example.com"
+    }
+  }'
+```
+
+## SDKs and Libraries
+
+### JavaScript/Node.js
+
+```javascript
+const axios = require('axios');
+
+const n8nAPI = axios.create({
+  baseURL: 'https://your-n8n-instance.com/api/v1',
+  headers: {
+    'X-N8N-API-KEY': 'your-api-key'
+  }
+});
+
+// List workflows
+const workflows = await n8nAPI.get('/workflows');
+
+// Execute workflow
+const execution = await n8nAPI.post('/workflows/1/execute', {
+  data: { message: 'Hello World' }
+});
+```
+
+### Python
+
+```python
+import requests
+
+class N8nAPI:
+    def __init__(self, base_url, api_key):
+        self.base_url = base_url
+        self.headers = {'X-N8N-API-KEY': api_key}
+    
+    def get_workflows(self):
+        response = requests.get(f"{self.base_url}/workflows", headers=self.headers)
+        return response.json()
+    
+    def execute_workflow(self, workflow_id, data):
+        response = requests.post(
+            f"{self.base_url}/workflows/{workflow_id}/execute",
+            json={"data": data},
+            headers=self.headers
+        )
+        return response.json()
+
+# Usage
+n8n = N8nAPI("https://your-n8n-instance.com/api/v1", "your-api-key")
+workflows = n8n.get_workflows()
+```
+
+## Best Practices
+
+### Security
+- Keep API keys secure and rotate them regularly
+- Use environment variables for sensitive data
+- Implement proper authentication and authorization
+- Use HTTPS for all API communications
+
+### Performance
+- Implement retry logic for failed requests
+- Use pagination for large result sets
+- Cache responses when appropriate
+- Monitor API usage and quotas
+
+### Error Handling
+- Always check response status codes
+- Implement proper error handling
+- Log API errors for debugging
+- Use exponential backoff for retries
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/api/authentication">
+    Learn about API authentication methods
+  </Card>
+  <Card title="Workflows API" icon="workflow" href="/api/workflows">
+    Manage workflows programmatically
+  </Card>
+  <Card title="Executions API" icon="play" href="/api/executions">
+    Control workflow executions
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/concepts/webhooks">
+    Set up webhook integrations
+  </Card>
+</CardGroup>
+
+<Warning>
+  Keep your API keys secure! Never commit them to version control or share them publicly.
+</Warning>
