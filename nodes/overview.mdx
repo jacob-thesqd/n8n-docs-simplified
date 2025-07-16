@@ -1,0 +1,189 @@
+---
+title: "Node Overview"
+description: "Explore n8n's extensive library of nodes and integrations"
+---
+
+## Node Library
+
+n8n offers 400+ nodes to connect with various services and perform different tasks. Nodes are organized into categories to help you find the right tool for your automation needs.
+
+<CardGroup cols={3}>
+  <Card title="Core Nodes" icon="star">
+    Essential building blocks for any workflow
+  </Card>
+  <Card title="Trigger Nodes" icon="play">
+    Start workflows based on events or schedules
+  </Card>
+  <Card title="Regular Nodes" icon="cog">
+    Process data and perform actions
+  </Card>
+</CardGroup>
+
+## Popular Nodes
+
+### Communication & Messaging
+- **Slack** - Send messages, create channels, manage users
+- **Discord** - Post messages, manage servers
+- **Telegram** - Send messages and media
+- **Microsoft Teams** - Post to channels and chats
+- **Gmail** - Send emails, read inbox, manage labels
+
+### Data & Storage
+- **Google Sheets** - Read, write, and manipulate spreadsheets
+- **MySQL** - Execute queries and manage databases
+- **PostgreSQL** - Database operations and queries
+- **MongoDB** - NoSQL database operations
+- **Airtable** - Manage records and tables
+
+### Development & APIs
+- **HTTP Request** - Make API calls to any service
+- **Webhook** - Receive HTTP requests
+- **Code** - Execute custom JavaScript or Python
+- **Function** - Transform data with JavaScript
+- **Wait** - Add delays to workflows
+
+### Productivity & CRM
+- **Notion** - Create pages, databases, and content
+- **Trello** - Manage boards, lists, and cards
+- **HubSpot** - CRM operations and contact management
+- **Salesforce** - Lead and opportunity management
+- **Pipedrive** - Sales pipeline automation
+
+### Marketing & Analytics
+- **Google Analytics** - Track events and gather insights
+- **Mailchimp** - Email marketing automation
+- **Facebook Graph API** - Social media management
+- **Twitter** - Post tweets and manage accounts
+- **LinkedIn** - Professional networking automation
+
+## Node Categories
+
+### Core Nodes
+Essential nodes that form the foundation of most workflows:
+
+- **Manual Trigger** - Start workflows manually
+- **HTTP Request** - Make API calls
+- **Set** - Transform and set data
+- **IF** - Conditional logic
+- **Code** - Custom JavaScript/Python execution
+
+### Trigger Nodes
+Nodes that start workflow executions:
+
+- **Cron Trigger** - Schedule-based execution
+- **Webhook** - HTTP request triggers
+- **File Trigger** - File system monitoring
+- **Email Trigger** - Email-based triggers
+- **Form Trigger** - Web form submissions
+
+### Regular Nodes
+Nodes that process data and perform actions:
+
+- **Function** - Data transformation
+- **Switch** - Multiple condition routing
+- **Merge** - Combine data streams
+- **Split In Batches** - Process large datasets
+- **Error Trigger** - Handle workflow errors
+
+## Finding Nodes
+
+### Search by Service
+Use the search function to find nodes for specific services:
+- Type the service name (e.g., "Gmail", "Slack")
+- Browse by category
+- Filter by node type
+
+### Search by Function
+Look for nodes based on what you want to do:
+- "send email" → Gmail, Outlook, SendGrid
+- "database" → MySQL, PostgreSQL, MongoDB
+- "webhook" → Webhook, HTTP Request
+- "schedule" → Cron, Interval
+
+## Node Documentation
+
+Each node includes comprehensive documentation:
+
+### Parameters
+- Required and optional settings
+- Data types and formats
+- Authentication requirements
+- Usage examples
+
+### Examples
+- Common use cases
+- Sample configurations
+- Best practices
+- Troubleshooting tips
+
+## Community Nodes
+
+Extend n8n's functionality with community-created nodes:
+
+### Installing Community Nodes
+1. Go to **Settings** → **Community Nodes**
+2. Enter the npm package name
+3. Click **Install**
+4. Restart n8n if required
+
+### Popular Community Nodes
+- **n8n-nodes-playwright** - Browser automation
+- **n8n-nodes-puppeteer** - Web scraping
+- **n8n-nodes-openai** - AI and ChatGPT integration
+- **n8n-nodes-redis** - Redis database operations
+
+## Creating Custom Nodes
+
+### When to Create Custom Nodes
+- Service doesn't have an existing node
+- Need specialized functionality
+- Want to contribute to the community
+- Require specific data transformations
+
+### Development Process
+1. **Setup** - Use n8n's node development toolkit
+2. **Code** - Implement node logic and parameters
+3. **Test** - Verify functionality and edge cases
+4. **Package** - Create npm package
+5. **Publish** - Share with the community
+
+## Best Practices
+
+### Node Selection
+- Choose the most specific node for your use case
+- Prefer official nodes over community ones for reliability
+- Check node documentation for limitations
+- Consider maintenance and support
+
+### Configuration
+- Use meaningful names for nodes
+- Add descriptions for complex configurations
+- Test nodes individually before connecting
+- Keep credentials secure and organized
+
+### Performance
+- Batch operations when possible
+- Use appropriate data types
+- Implement error handling
+- Monitor execution times
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Core Nodes" icon="star" href="/nodes/core-nodes">
+    Learn about essential n8n nodes
+  </Card>
+  <Card title="Trigger Nodes" icon="play" href="/nodes/trigger-nodes">
+    Understand how to start workflows
+  </Card>
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Build your first workflow
+  </Card>
+  <Card title="Examples" icon="lightbulb" href="/workflows/examples">
+    See nodes in real workflows
+  </Card>
+</CardGroup>
+
+<Tip>
+  Start with core nodes like HTTP Request and Manual Trigger to understand the basics, then explore specific service integrations as needed.
+</Tip>
